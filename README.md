@@ -49,6 +49,7 @@ cd ../dedicated-megamek-container
 docker build --tag megamek:0.46.1 .
 ```
 
+## Running the container
 We should now have a megamek container built. You can run the container with the following command:
 
 ```

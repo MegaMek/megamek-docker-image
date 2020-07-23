@@ -1,6 +1,9 @@
 FROM openjdk:8-jdk
 
-# prepare home, user for jenkins
+# Install some bits
+RUN apt-get update && apt-get install -y wget tar && apt-get clean all
+
+# prepare home, user for megamek
 ENV MEGAMEK_HOME /megamek
 
 ARG user=megamek
@@ -11,7 +14,8 @@ ARG gid=1000
 RUN groupadd -g ${gid} ${group} \
     && useradd -d "$MEGAMEK_HOME" -u ${uid} -g ${gid} -m -s /bin/bash ${user}
 
-ADD ./megamek-0.46.1.tar.gz  /megamek
+RUN wget -qO- https://github.com/MegaMek/megamek/releases/download/v0.46.1/megamek-0.46.1.tar.gz \
+  | tar -xzf - --strip-components=1 -C /megamek
 
 WORKDIR /megamek
 

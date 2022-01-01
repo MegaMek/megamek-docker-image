@@ -14,6 +14,12 @@ to go.
 docker build --tag megamek:<version> .
 ```
 
+## To build for multiple platforms
+
+```bash
+docker buildx build --platform=linux/amd64,linux/arm64 -t tapenvyus/megamek:<version> .
+```
+
 ## Running the container
 
 We should now have a megamek container built. You can run the container with the following command:

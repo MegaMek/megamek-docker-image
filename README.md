@@ -1,14 +1,8 @@
 # dedicated-megamek-container
 
-This repo is to aid in setting up and running a dedicate megamek server as a container.
+This repo is to aid in setting up and running a dedicate MegaMek server as a container. The Dockerfile is set to automatically download the latest released version.
 
-Within this folder is an empty `app` folder. Place the decompressed archive from
-<https://megamek.org/downloads> inside of it. So if downloading MegaMek-0.47.9.tar.gz,
-you would decompress it and copy all files from inside the decompressed folder and place
-them inside the app folder. Afterwards, you just build/tag the image and you're good
-to go.
-
-## Build the docker continer to run dedicate server
+## Build the docker container to run dedicate server
 
 ```bash
 docker build --tag megamek:<version> .

@@ -5,13 +5,13 @@ This repo is to aid in setting up and running a dedicate MegaMek server as a con
 ## Build the docker container to run dedicate server
 
 ```bash
-docker build --tag megamek:<version> .
+docker build --build-arg MM_VERSION=<version to build> --tag megamek:<version> .
 ```
 
 ## To build for multiple platforms
 
 ```bash
-docker buildx build --platform=linux/amd64,linux/arm64 -t tapenvyus/megamek:<version> .
+docker buildx build --platform=linux/amd64,linux/arm64  --build-arg MM_VERSION=<version to build> -t tapenvyus/megamek:<version> .
 ```
 
 ## Running the container

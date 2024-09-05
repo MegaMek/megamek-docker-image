@@ -1,17 +1,35 @@
-FROM ubuntu:jammy as builder
+FROM ubuntu:jammy AS builder
 
 ARG MM_VERSION
 ENV MM_VERSION=${MM_VERSION}
+ARG SENTRY_ENABLED
+ENV SENTRY_ENABLED=${SENTRY_ENABLED}
 
 WORKDIR /app
 
-RUN apt update && \
-  apt install curl ca-certificates -y --no-install-recommends && \
-  curl -o /tmp/megamek.tar.gz -L "https://github.com/MegaMek/megamek/releases/download/v${MM_VERSION}/megamek-${MM_VERSION}.tar.gz" && \
-  tar -zxvf /tmp/megamek.tar.gz && mv megamek-${MM_VERSION} megamek && \
-  rm -rf megamek/data/fonts megamek/data/forcegenerator megamek/data/images megamek/data/names megamek/data/rat megamek/data/scenarios megamek/data/sounds megamek/docs megamek/userdata megamek/mm megamek/mm.bat
+RUN apt-get update && \
+  apt-get install curl ca-certificates -y --no-install-recommends && \
+  apt-get clean
+ADD  "https://github.com/MegaMek/megamek/releases/download/v${MM_VERSION}/megamek-${MM_VERSION}.tar.gz" /tmp/megamek.tar.gz
+RUN tar -zxvf /tmp/megamek.tar.gz && mv MegaMek-${MM_VERSION} megamek && \
+  mv megamek/docs/mm-revision.txt /app/mm-revision.txt && \
+  rm -rf megamek/data/fonts && \
+  rm -rf megamek/data/forcegenerator && \
+  rm -rf megamek/data/images && \
+  rm -rf megamek/data/names && \
+  rm -rf megamek/data/rat && \
+  rm -rf megamek/data/scenarios && \
+  rm -rf megamek/data/sounds && \
+  rm -rf megamek/docs && \
+  mkdir megamek/docs && \
+  mv /app/mm-revision.txt megamek/docs/mm-revision.txt && \
+  rm -rf megamek/userdata && \
+  rm -rf megamek/*.exe && \
+  rm -rf megamek/*.sh && \
+  rm megamek/sentry.properties && \
+  echo "enabled=${SENTRY_ENABLED}" > megamek/sentry.properties
 
-FROM eclipse-temurin:17-jammy
+FROM eclipse-temurin:17-noble
 
 WORKDIR /app
 EXPOSE 2346
@@ -19,9 +37,8 @@ EXPOSE 2346
 RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
   && apt-get -q update \
   && apt-get -q dist-upgrade -y \
-  && rm -r /var/lib/apt/lists/*
-
-RUN useradd --user-group --create-home --system --skel /dev/null --home-dir /app megamek
+  && apt-get clean && \
+  useradd --user-group --create-home --system --skel /dev/null --home-dir /app megamek
 
 COPY --from=builder --chown=megamek:megamek /app/megamek/ /app/
 

@@ -1,4 +1,4 @@
-FROM ubuntu:jammy AS builder
+FROM ubuntu:noble AS builder
 
 ARG MM_VERSION
 ENV MM_VERSION=${MM_VERSION}

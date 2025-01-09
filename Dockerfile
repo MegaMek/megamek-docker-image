@@ -36,7 +36,7 @@ EXPOSE 2346
 
 RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
   && apt-get -q update \
-  && apt-get -q dist-upgrade -y \
+  && apt-get -q full-upgrade -y \
   && apt-get clean && \
   useradd --user-group --create-home --system --skel /dev/null --home-dir /app megamek
 

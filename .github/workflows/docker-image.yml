@@ -21,7 +21,7 @@ jobs:
       - id: cleanup
         name: Create non-versioned Environment Variable
         run: |
-          echo "trimmedMMVersion=$(echo '${{ steps.megamek.outputs.release }}' | sed -r 's/^.{1}//')" >> $GITHUB_ENV
+          echo "trimmedMMVersion=$(echo '${{ steps.megamek.outputs.release }}' | sed -r 's/^.{1}//')" >> $GITHUB_OUTPUT
 
       - uses: actions/checkout@v4
       - name: Login to Docker Hub

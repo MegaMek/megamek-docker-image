@@ -10,7 +10,7 @@ WORKDIR /app
 RUN apt-get update && \
   apt-get install curl ca-certificates -y --no-install-recommends && \
   apt-get clean
-ADD  "https://github.com/MegaMek/megamek/releases/download/v${MM_VERSION}/megamek-${MM_VERSION}.tar.gz" /tmp/megamek.tar.gz
+ADD  "https://github.com/MegaMek/megamek/releases/download/${MM_VERSION}/megamek-${MM_VERSION}.tar.gz" /tmp/megamek.tar.gz
 RUN tar -zxvf /tmp/megamek.tar.gz && mv MegaMek-${MM_VERSION} megamek && \
   mv megamek/docs/mm-revision.txt /app/mm-revision.txt && \
   rm -rf megamek/data/fonts && \

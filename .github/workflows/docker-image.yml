@@ -32,5 +32,8 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          build-args: MM_VERSION=${{ steps.megamek.outputs.release }}, SENTRY_ENABLED=true
+          platforms: linux/amd64, linux/arm64/v8
+          build-args: |
+            - MM_VERSION=${{ steps.megamek.outputs.release }}
+            - SENTRY_ENABLED=true
           tags: tapenvyus/megamek:latest, tapenvyus/megamek:${{ steps.megamek.outputs.release }}

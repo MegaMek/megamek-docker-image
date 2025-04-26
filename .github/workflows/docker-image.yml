@@ -34,6 +34,6 @@ jobs:
           push: true
           platforms: linux/amd64, linux/arm64/v8
           build-args: |
-            - MM_VERSION=${{ steps.megamek.outputs.release }}
-            - SENTRY_ENABLED=true
+            MM_VERSION=${{ steps.megamek.outputs.release }}
+            SENTRY_ENABLED=true
           tags: tapenvyus/megamek:latest, tapenvyus/megamek:${{ steps.megamek.outputs.release }}

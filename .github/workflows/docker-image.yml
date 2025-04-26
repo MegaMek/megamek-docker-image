@@ -23,5 +23,5 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: tapenvyus/megamek
           dockerfile: Dockerfile
-          build_args: MM_VERSION=${{ steps.keydb.outputs.release }}, SENTRY_ENABLED=true
-          tags: latest, ${{ steps.keydb.outputs.release }}
+          build_args: MM_VERSION=${{ steps.megamek.outputs.release }}, SENTRY_ENABLED=true
+          tags: latest, ${{ steps.megamek.outputs.release }}

@@ -7,6 +7,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    outputs:
+      trimmedMMVersion: ${{ steps.cleanup.outputs.trimmedMMVersion }}
+
     steps:
       - id: megamek
         uses: pozetroninc/github-action-get-latest-release@master

@@ -24,6 +24,16 @@ docker run --rm -d -p 2346:2346 megamek:<version>
 
 You should now be able to connect to the above dedicate megamek server on localhost or your LAN IP and port 2346
 
+## Running the container with custom user folders
+
+Create a folder to store all of your custom user data, meks, maps, etc.. Recommend a `userdata` folder
+locally. The command below assumes it is created within the folder you're running the command from.
+Change the `./userdata` portion to be the path where you wish to have it stored.
+
+```bash
+docker run --rm -d -p 2346:2346 -v ./userdata:/app/userdata megamek:<version>
+```
+
 ## Sentry Configuration
 
 A point of note, this image is configured to allow the enable or disable of Sentry upon build. The images provided to Docker Hub have Sentry enabled for the MegaMek team to get as much error data as possible. You can disable in your own build by passing `false` to the above build arg.

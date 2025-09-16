@@ -23,7 +23,6 @@ RUN tar -zxvf /tmp/megamek.tar.gz && mv MegaMek-${MM_VERSION} megamek && \
   rm -rf megamek/docs && \
   mkdir megamek/docs && \
   mv /app/mm-revision.txt megamek/docs/mm-revision.txt && \
-  rm -rf megamek/userdata && \
   rm -rf megamek/*.exe && \
   rm -rf megamek/*.sh && \
   rm megamek/sentry.properties && \

@@ -1,4 +1,4 @@
-FROM ubuntu:noble AS builder
+FROM alpine:latest AS builder
 
 ARG MM_VERSION
 ENV MM_VERSION=${MM_VERSION}
@@ -7,10 +7,7 @@ ENV SENTRY_ENABLED=${SENTRY_ENABLED}
 
 WORKDIR /app
 
-RUN apt-get update && \
-  apt-get install curl ca-certificates -y --no-install-recommends && \
-  apt-get clean
-ADD  "https://github.com/MegaMek/megamek/releases/download/v${MM_VERSION}/megamek-${MM_VERSION}.tar.gz" /tmp/megamek.tar.gz
+ADD "https://github.com/MegaMek/megamek/releases/download/v${MM_VERSION}/megamek-${MM_VERSION}.tar.gz" /tmp/megamek.tar.gz
 RUN tar -zxvf /tmp/megamek.tar.gz && mv MegaMek-${MM_VERSION} megamek && \
   mv megamek/docs/mm-revision.txt /app/mm-revision.txt && \
   rm -rf megamek/data/fonts && \
@@ -28,18 +25,12 @@ RUN tar -zxvf /tmp/megamek.tar.gz && mv MegaMek-${MM_VERSION} megamek && \
   rm megamek/sentry.properties && \
   echo "enabled=${SENTRY_ENABLED}" > megamek/sentry.properties
 
-FROM eclipse-temurin:17-noble
+FROM gcr.io/distroless/java25-debian13:nonroot
 
 WORKDIR /app
 EXPOSE 2346
 
-RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
-  && apt-get -q update \
-  && apt-get -q full-upgrade -y \
-  && apt-get clean && \
-  useradd --user-group --create-home --system --skel /dev/null --home-dir /app megamek
-
-COPY --from=builder --chown=megamek:megamek /app/megamek/ /app/
+COPY --from=builder --chown=nonroot:0 /app/megamek/ /app/
 
 ENTRYPOINT ["java", "-jar", "MegaMek.jar"]
 CMD ["-dedicated", "-port", "2346"]

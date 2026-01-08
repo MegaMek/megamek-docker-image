@@ -28,7 +28,7 @@ RUN tar -zxvf /tmp/megamek.tar.gz && mv MegaMek-${MM_VERSION} megamek && \
   rm megamek/sentry.properties && \
   echo "enabled=${SENTRY_ENABLED}" > megamek/sentry.properties
 
-FROM eclipse-temurin:17-noble
+FROM eclipse-temurin:21-noble
 
 WORKDIR /app
 EXPOSE 2346

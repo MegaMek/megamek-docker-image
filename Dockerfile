@@ -30,6 +30,9 @@ FROM gcr.io/distroless/java25-debian13:nonroot
 WORKDIR /app
 EXPOSE 2346
 
+# Chown to nonroot user, so that it can access the files within /app.
+# But, in the case of running within OpenShift, a random userid will be used.
+# To ensure the image still functions in that scenario, use groupid 0.
 COPY --from=builder --chown=nonroot:0 /app/megamek/ /app/
 
 ENTRYPOINT ["java", "-jar", "MegaMek.jar"]

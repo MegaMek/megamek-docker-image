@@ -8,7 +8,7 @@ ENV SENTRY_ENABLED=${SENTRY_ENABLED}
 WORKDIR /app
 
 ADD  "https://github.com/MegaMek/megamek/releases/download/v${MM_VERSION}/megamek-${MM_VERSION}.tar.gz" /tmp/megamek.tar.gz
-RUN tar -zxf /tmp/megamek.tar.gz && mv MegaMek-${MM_VERSION} megamek
+RUN tar -zxf /tmp/megamek.tar.gz -C /app/megamek
 RUN mv megamek/docs/mm-revision.txt /app/mm-revision.txt
 RUN rm -rf megamek/data/fonts
 RUN rm -rf megamek/data/forcegenerator

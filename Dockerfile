@@ -8,22 +8,22 @@ ENV SENTRY_ENABLED=${SENTRY_ENABLED}
 WORKDIR /app
 
 ADD  "https://github.com/MegaMek/megamek/releases/download/v${MM_VERSION}/megamek-${MM_VERSION}.tar.gz" /tmp/megamek.tar.gz
-RUN tar -zxvf /tmp/megamek.tar.gz && mv MegaMek-${MM_VERSION} megamek && \
-  mv megamek/docs/mm-revision.txt /app/mm-revision.txt && \
-  rm -rf megamek/data/fonts && \
-  rm -rf megamek/data/forcegenerator && \
-  rm -rf megamek/data/images && \
-  rm -rf megamek/data/names && \
-  rm -rf megamek/data/rat && \
-  rm -rf megamek/data/scenarios && \
-  rm -rf megamek/data/sounds && \
-  rm -rf megamek/docs && \
-  mkdir megamek/docs && \
-  mv /app/mm-revision.txt megamek/docs/mm-revision.txt && \
-  rm -rf megamek/*.exe && \
-  rm -rf megamek/*.sh && \
-  rm megamek/sentry.properties && \
-  echo "enabled=${SENTRY_ENABLED}" > megamek/sentry.properties
+RUN tar -zxf /tmp/megamek.tar.gz && mv MegaMek-${MM_VERSION} megamek
+RUN mv megamek/docs/mm-revision.txt /app/mm-revision.txt
+RUN rm -rf megamek/data/fonts
+RUN rm -rf megamek/data/forcegenerator
+RUN rm -rf megamek/data/images
+RUN rm -rf megamek/data/names
+RUN rm -rf megamek/data/rat
+RUN rm -rf megamek/data/scenarios
+RUN rm -rf megamek/data/sounds
+RUN rm -rf megamek/docs
+RUN mkdir megamek/docs
+RUN mv /app/mm-revision.txt megamek/docs/mm-revision.txt
+RUN rm -rf megamek/*.exe
+RUN rm -rf megamek/*.sh
+RUN rm megamek/sentry.properties
+RUN echo "enabled=${SENTRY_ENABLED}" > megamek/sentry.properties
 
 FROM eclipse-temurin:21-noble
 

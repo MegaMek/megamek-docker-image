@@ -8,7 +8,7 @@ ENV SENTRY_ENABLED=${SENTRY_ENABLED}
 WORKDIR /app
 
 ADD  "https://github.com/MegaMek/megamek/releases/download/v${MM_VERSION}/megamek-${MM_VERSION}.tar.gz" /tmp/megamek.tar.gz
-RUN tar -zxf /tmp/megamek.tar.gz -C /app/megamek
+RUN mkdir -p /app/megamek && tar --strip-components=1 -zxvf /tmp/megamek.tar.gz -C /app/megamek
 RUN mv megamek/docs/mm-revision.txt /app/mm-revision.txt
 RUN rm -rf megamek/data/fonts
 RUN rm -rf megamek/data/forcegenerator
@@ -27,15 +27,14 @@ RUN echo "enabled=${SENTRY_ENABLED}" > megamek/sentry.properties
 
 FROM eclipse-temurin:21-noble
 
-WORKDIR /app
-EXPOSE 2346
-
 RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
   && apt-get -q update \
   && apt-get -q full-upgrade -y \
   && apt-get clean && \
   useradd --user-group --create-home --system --skel /dev/null --home-dir /app megamek
 
+WORKDIR /app
+EXPOSE 2346
 USER megamek
 
 COPY --from=builder --chown=megamek:megamek /app/megamek/ /app/

@@ -5,6 +5,7 @@ This repo is to aid in setting up and running a dedicate MegaMek server as a con
 ## Use a published image
 
 Images are published to GitHub and to Docker Hub. Both hold the same images, for amd64 and arm64.
+Sentry is enabled on the published images.
 
 ```bash
 docker run --rm -d -p 2346:2346 -v ./userdata:/app/userdata ghcr.io/megamek/megamek:latest
@@ -29,7 +30,7 @@ The `Docker image` workflow runs by itself:
 
 To build by hand, run the workflow from the Actions tab. You can name one release, force a rebuild, or do a dry run that publishes nothing.
 
-## Build the docker container to run dedicate server
+## Build the docker container to run dedicated server
 
 ```bash
 docker build --build-arg MM_VERSION=<version to build> --build-arg SENTRY_ENABLED=<true or false> --tag megamek:<version> .

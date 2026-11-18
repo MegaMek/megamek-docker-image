@@ -6,7 +6,7 @@ import unittest
 import docker_release
 
 GHCR = "ghcr.io/megamek/megamek"
-HUB = "tapenvyus/megamek"
+MIRROR = "registry.example/megamek"
 
 
 def release(tag, prerelease=False, draft=False, archive=True):
@@ -40,7 +40,7 @@ class ParseVersionTest(unittest.TestCase):
 
 class PlanTest(unittest.TestCase):
     def test_missing_mode_builds_newest_of_each_channel(self):
-        builds = docker_release.plan(RELEASES, "missing", [GHCR, HUB], exists=registry())
+        builds = docker_release.plan(RELEASES, "missing", [GHCR, MIRROR], exists=registry())
         self.assertEqual(["v0.51.00.1", "v0.51.01.10"], [build["release"] for build in builds])
         self.assertEqual(["core", "experimental"], [build["channel"] for build in builds])
 
@@ -50,8 +50,8 @@ class PlanTest(unittest.TestCase):
         self.assertEqual(f"{GHCR}:v0.51.01.10,{GHCR}:experimental", builds[1]["tags"])
 
     def test_missing_mode_skips_a_release_present_everywhere(self):
-        present = registry(f"{GHCR}:v0.51.00.1", f"{HUB}:v0.51.00.1", f"{GHCR}:v0.51.01.10")
-        builds = docker_release.plan(RELEASES, "missing", [GHCR, HUB], exists=present)
+        present = registry(f"{GHCR}:v0.51.00.1", f"{MIRROR}:v0.51.00.1", f"{GHCR}:v0.51.01.10")
+        builds = docker_release.plan(RELEASES, "missing", [GHCR, MIRROR], exists=present)
         self.assertEqual(["v0.51.01.10"], [build["release"] for build in builds])
 
     def test_rebuild_mode_ignores_the_registry(self):

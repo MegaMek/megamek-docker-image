@@ -4,12 +4,11 @@ This repo is to aid in setting up and running a dedicate MegaMek server as a con
 
 ## Use a published image
 
-Images are published to GitHub and to Docker Hub. Both hold the same images, for amd64 and arm64.
+Images are published to the GitHub Container Registry, for amd64 and arm64.
 Sentry is enabled on the published images.
 
 ```bash
 docker run --rm -d -p 2346:2346 -v ./userdata:/app/userdata ghcr.io/megamek/megamek:latest
-docker run --rm -d -p 2346:2346 -v ./userdata:/app/userdata tapenvyus/megamek:latest
 ```
 
 | Tag | What you get |
@@ -39,7 +38,7 @@ docker build --build-arg MM_VERSION=<version to build> --build-arg SENTRY_ENABLE
 ## To build for multiple platforms
 
 ```bash
-docker buildx build --platform=linux/amd64,linux/arm64  --build-arg MM_VERSION=<version to build> --build-arg SENTRY_ENABLED=<true or false> -t tapenvyus/megamek:<version> .
+docker buildx build --platform=linux/amd64,linux/arm64  --build-arg MM_VERSION=<version to build> --build-arg SENTRY_ENABLED=<true or false> -t megamek:<version> .
 ```
 
 ## Running the container
@@ -64,4 +63,4 @@ docker run --rm -d -p 2346:2346 -v ./userdata:/app/userdata megamek:<version>
 
 ## Sentry Configuration
 
-A point of note, this image is configured to allow the enable or disable of Sentry upon build. The images provided to Docker Hub have Sentry enabled for the MegaMek team to get as much error data as possible. You can disable in your own build by passing `false` to the above build arg.
+A point of note, this image is configured to allow the enable or disable of Sentry upon build. The published images have Sentry enabled for the MegaMek team to get as much error data as possible. You can disable in your own build by passing `false` to the above build arg.

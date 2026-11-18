@@ -1,4 +1,4 @@
-FROM alpine AS builder
+FROM alpine:3 AS builder
 
 ARG MM_VERSION
 ENV MM_VERSION=${MM_VERSION}

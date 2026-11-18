@@ -23,7 +23,7 @@ Your server and your players must run the same MegaMek version, so pin a version
 
 The `Docker image` workflow runs by itself:
 
-- **Every day** it looks for a new MegaMek release, Core or Experimental. It builds one only when its image is missing.
+- **Every 3 hours** it looks for a new MegaMek release, Core or Experimental. It builds one only when its image is missing.
 - **Every Monday** it builds the current Core and Experimental images again. That picks up Java and Ubuntu security patches.
 - **Every build** starts the server and waits for port 2346 before anything is published.
 

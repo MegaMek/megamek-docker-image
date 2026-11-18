@@ -4,8 +4,10 @@ run-name: Docker image - ${{ github.event_name }}${{ inputs.version && format(' 
 
 on:
   schedule:
-    # Daily: build any new MegaMek release that has no image yet. Does nothing otherwise.
-    - cron: "23 6 * * *"
+    # Every 3 hours: build any new MegaMek release that has no image yet. Does nothing otherwise.
+    # MegaMek releases land at no fixed time (the weekly run starts late, and extra ones are
+    # started by hand), so this checks often and never tries to match a clock time.
+    - cron: "23 */3 * * *"
     # Monday: build the current images again to pick up Java and Ubuntu security patches.
     - cron: "23 8 * * 1"
   workflow_dispatch:
